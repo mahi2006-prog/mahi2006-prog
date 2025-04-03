@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>  // For malloc and free
+
+int main() {
+    int N, i, searchElement, found = 0;
+    
+    // Read the size of the list
+    scanf("%d", &N);
+    
+    // Dynamically allocate memory for the list array
+    int *list = (int *)malloc(N * sizeof(int));
+    
+    if (list == NULL) {
+        // Handle memory allocation failure
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
+    
+    // Read the N elements into the list
+    for(i = 0; i < N; i++) {
+        scanf("%d", &list[i]);
+    }
+    
+    // Read the element to search for
+    scanf("%d", &searchElement);
+    
+    // Search the list for the given element
+    for(i = 0; i < N; i++) {
+        if(list[i] == searchElement) {
+            found = 1;  // Element found
+            break;
+        }
+    }
+    
+    // Output the result
+    if(found) {
+        printf("Found\n");
+    } else {
+        printf("Not Found\n");
+    }
+    
+    // Free the dynamically allocated memory
+    free(list);
+    
+    return 0;
+}
