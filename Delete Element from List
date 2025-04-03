@@ -1,0 +1,47 @@
+#include <stdio.h>
+
+int main() {
+    int N, i, deleteElement, found = 0;
+    
+    // Read the size of the list
+    scanf("%d", &N);
+    
+    // Declare an array to store the list elements
+    int list[N];
+    
+    // Read the N elements into the list
+    for(i = 0; i < N; i++) {
+        scanf("%d", &list[i]);
+    }
+    
+    // Read the element to delete
+    scanf("%d", &deleteElement);
+    
+    // Search for the element and delete the first occurrence
+    for(i = 0; i < N; i++) {
+        if(list[i] == deleteElement) {
+            found = 1;  // Element found
+            // Shift all elements after the found element to the left
+            for(int j = i; j < N - 1; j++) {
+                list[j] = list[j + 1];
+            }
+            N--;  // Reduce the size of the list
+            break;
+        }
+    }
+    
+    // Output the result
+    if(found) {
+        for(i = 0; i < N; i++) {
+            printf("%d", list[i]);
+            if(i < N - 1) {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    } else {
+        printf("Element not found\n");
+    }
+    
+    return 0;
+}
