@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int main() {
+    int N, i, val, k = 0;
+    
+    // Read the size of the list
+    scanf("%d", &N);
+    
+    // Declare an array to store the list elements
+    int arr[N];
+    
+    // Read the N elements into the array
+    for(i = 0; i < N; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    // Read the element to remove
+    scanf("%d", &val);
+    
+    // Modify the array to remove all occurrences of 'val'
+    for(i = 0; i < N; i++) {
+        if(arr[i] != val) {
+            arr[k] = arr[i];  // Copy non-val elements to the beginning
+            k++;  // Increment the position for next valid element
+        }
+    }
+    
+    // Print the modified list after removing 'val'
+    for(i = 0; i < k; i++) {
+        printf("%d", arr[i]);
+        if(i < k - 1) {
+            printf(" ");
+        }
+    }
+    
+    printf("\n");
+    
+    return 0;
+}
