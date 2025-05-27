@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+typedef struct Node {
+    int val;
+    struct Node *left, *right;
+} Node;
+
+Node* newNode(int val) {
+    if (val == -1) return NULL;
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->val = val;
+    node->left = node->right = NULL;
+    return node;
+}
+
+int findMin(Node* root) {
+    if (!root) return INT_MAX;
+    int l = findMin(root->left);
+    int r = findMin(root->right);
+    int m = root->val;
+    if (l < m) m = l;
+    if (r < m) m = r;
+    return m;
+}
+
+Node* buildTree(int arr[], int n) {
+    if (n == 0 || arr[0] == -1) return NULL;
+    Node* nodes[100];
+    for (int i = 0; i < n; i++)
+        nodes[i] = newNode(arr[i]);
+
+    for (int i = 0, j = 1; j < n; i++) {
+        if (!nodes[i]) continue;
+        if (j < n) nodes[i]->left = nodes[j++];
+        if (j < n) nodes[i]->right = nodes[j++];
+    }
+    return nodes[0];
+}
+
+int main() {
+    int n, arr[100];
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+    Node* root = buildTree(arr, n);
+    printf("%d\n", findMin(root));
+    return 0;
+}
