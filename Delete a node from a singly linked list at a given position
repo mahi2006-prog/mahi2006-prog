@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* createNode(int d) {
+    struct Node* n = (struct Node*)malloc(sizeof(struct Node));
+    n->data = d; n->next = NULL;
+    return n;
+}
+
+void insertEnd(struct Node** head, int d) {
+    struct Node* newNode = createNode(d);
+    if (*head == NULL) *head = newNode;
+    else {
+        struct Node* temp = *head;
+        while (temp->next) temp = temp->next;
+        temp->next = newNode;
+    }
+}
+
+int deleteAtPos(struct Node** head, int pos) {
+    if (*head == NULL) return 0;
+    struct Node* temp = *head;
+
+    if (pos == 0) {
+        *head = temp->next;
+        free(temp);
+        return 1;
+    }
+    for (int i = 0; temp && i < pos - 1; i++) temp = temp->next;
+    if (!temp || !temp->next) return 0;
+
+    struct Node* toDelete = temp->next;
+    temp->next = toDelete->next;
+    free(toDelete);
+    return 1;
+}
+
+void printList(struct Node* head) {
+    while (head) {
+        printf("%d ", head->data);
+        head = head->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    int n, val, pos;
+    struct Node* head = NULL;
+
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &val);
+        insertEnd(&head, val);
+    }
+    scanf("%d", &pos);
+
+    if (!deleteAtPos(&head, pos)) printf("Invalid position\n");
+    else printList(head);
+
+    return 0;
+}
